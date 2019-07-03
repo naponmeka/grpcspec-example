@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package gogrpcspec;
+
+message Employee {
+    string name = 1;
+}
+
+message Task {
+    Employee employee = 1;
+    string name = 2;
+    string status = 3;
+}
+
+message Summary {
+    int32 todoTasks = 1;
+    int32 doingTasks = 2;
+    int32 doneTasks = 3;
+}
+
+message SpecificSummary {
+    Employee employee = 1;
+    Summary summary = 2;
+}
+
+service TaskManager {
+    rpc GetSummary(Employee) returns (SpecificSummary) {}
+    rpc AddTask(Task) returns (SpecificSummary) {}
+    rpc AddTasks(stream Task) returns(Summary) {}
+    rpc GetTasks(Employee) returns (stream Task) {}
+    rpc ChangeToDone(stream Task) returns (stream SpecificSummary) {}
+}
