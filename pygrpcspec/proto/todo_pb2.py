@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='proto/todo.proto',
   package='gogrpcspec',
   syntax='proto3',
-  serialized_pb=_b('\n\x10proto/todo.proto\x12\ngogrpcspec\"\x18\n\x08\x45mployee\x12\x0c\n\x04name\x18\x01 \x01(\t\"L\n\x04Task\x12&\n\x08\x65mployee\x18\x01 \x01(\x0b\x32\x14.gogrpcspec.Employee\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0e\n\x06status\x18\x03 \x01(\t\"C\n\x07Summary\x12\x11\n\ttodoTasks\x18\x01 \x01(\x05\x12\x12\n\ndoingTasks\x18\x02 \x01(\x05\x12\x11\n\tdoneTasks\x18\x03 \x01(\x05\"_\n\x0fSpecificSummary\x12&\n\x08\x65mployee\x18\x01 \x01(\x0b\x32\x14.gogrpcspec.Employee\x12$\n\x07summary\x18\x02 \x01(\x0b\x32\x13.gogrpcspec.Summary2\xc0\x02\n\x0bTaskManager\x12\x41\n\nGetSummary\x12\x14.gogrpcspec.Employee\x1a\x1b.gogrpcspec.SpecificSummary\"\x00\x12:\n\x07\x41\x64\x64Task\x12\x10.gogrpcspec.Task\x1a\x1b.gogrpcspec.SpecificSummary\"\x00\x12\x35\n\x08\x41\x64\x64Tasks\x12\x10.gogrpcspec.Task\x1a\x13.gogrpcspec.Summary\"\x00(\x01\x12\x36\n\x08GetTasks\x12\x14.gogrpcspec.Employee\x1a\x10.gogrpcspec.Task\"\x00\x30\x01\x12\x43\n\x0c\x43hangeToDone\x12\x10.gogrpcspec.Task\x1a\x1b.gogrpcspec.SpecificSummary\"\x00(\x01\x30\x01\x62\x06proto3')
+  serialized_pb=_b('\n\x10proto/todo.proto\x12\ngogrpcspec\"\x18\n\x08\x45mployee\x12\x0c\n\x04name\x18\x01 \x01(\t\"L\n\x04Task\x12&\n\x08\x65mployee\x18\x01 \x01(\x0b\x32\x14.gogrpcspec.Employee\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0e\n\x06status\x18\x03 \x01(\t\"C\n\x07Summary\x12\x11\n\ttodoTasks\x18\x01 \x01(\x05\x12\x12\n\ndoingTasks\x18\x02 \x01(\x05\x12\x11\n\tdoneTasks\x18\x03 \x01(\x05\"_\n\x0fSpecificSummary\x12&\n\x08\x65mployee\x18\x01 \x01(\x0b\x32\x14.gogrpcspec.Employee\x12$\n\x07summary\x18\x02 \x01(\x0b\x32\x13.gogrpcspec.Summary2\xb5\x02\n\x0bTaskManager\x12\x41\n\nGetSummary\x12\x14.gogrpcspec.Employee\x1a\x1b.gogrpcspec.SpecificSummary\"\x00\x12:\n\x07\x41\x64\x64Task\x12\x10.gogrpcspec.Task\x1a\x1b.gogrpcspec.SpecificSummary\"\x00\x12\x35\n\x08\x41\x64\x64Tasks\x12\x10.gogrpcspec.Task\x1a\x13.gogrpcspec.Summary\"\x00(\x01\x12\x36\n\x08GetTasks\x12\x14.gogrpcspec.Employee\x1a\x10.gogrpcspec.Task\"\x00\x30\x01\x12\x38\n\x0c\x43hangeToDone\x12\x10.gogrpcspec.Task\x1a\x10.gogrpcspec.Task\"\x00(\x01\x30\x01\x62\x06proto3')
 )
 
 
@@ -229,7 +229,7 @@ _TASKMANAGER = _descriptor.ServiceDescriptor(
   index=0,
   options=None,
   serialized_start=303,
-  serialized_end=623,
+  serialized_end=612,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetSummary',
@@ -273,7 +273,7 @@ _TASKMANAGER = _descriptor.ServiceDescriptor(
     index=4,
     containing_service=None,
     input_type=_TASK,
-    output_type=_SPECIFICSUMMARY,
+    output_type=_TASK,
     options=None,
   ),
 ])
@@ -324,7 +324,7 @@ try:
       self.ChangeToDone = channel.stream_stream(
           '/gogrpcspec.TaskManager/ChangeToDone',
           request_serializer=Task.SerializeToString,
-          response_deserializer=SpecificSummary.FromString,
+          response_deserializer=Task.FromString,
           )
 
 
@@ -393,7 +393,7 @@ try:
         'ChangeToDone': grpc.stream_stream_rpc_method_handler(
             servicer.ChangeToDone,
             request_deserializer=Task.FromString,
-            response_serializer=SpecificSummary.SerializeToString,
+            response_serializer=Task.SerializeToString,
         ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -480,7 +480,7 @@ try:
     response_serializers = {
       ('gogrpcspec.TaskManager', 'AddTask'): SpecificSummary.SerializeToString,
       ('gogrpcspec.TaskManager', 'AddTasks'): Summary.SerializeToString,
-      ('gogrpcspec.TaskManager', 'ChangeToDone'): SpecificSummary.SerializeToString,
+      ('gogrpcspec.TaskManager', 'ChangeToDone'): Task.SerializeToString,
       ('gogrpcspec.TaskManager', 'GetSummary'): SpecificSummary.SerializeToString,
       ('gogrpcspec.TaskManager', 'GetTasks'): Task.SerializeToString,
     }
@@ -511,7 +511,7 @@ try:
     response_deserializers = {
       ('gogrpcspec.TaskManager', 'AddTask'): SpecificSummary.FromString,
       ('gogrpcspec.TaskManager', 'AddTasks'): Summary.FromString,
-      ('gogrpcspec.TaskManager', 'ChangeToDone'): SpecificSummary.FromString,
+      ('gogrpcspec.TaskManager', 'ChangeToDone'): Task.FromString,
       ('gogrpcspec.TaskManager', 'GetSummary'): SpecificSummary.FromString,
       ('gogrpcspec.TaskManager', 'GetTasks'): Task.FromString,
     }

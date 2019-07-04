@@ -37,7 +37,7 @@ class TaskManagerStub(object):
     self.ChangeToDone = channel.stream_stream(
         '/gogrpcspec.TaskManager/ChangeToDone',
         request_serializer=proto_dot_todo__pb2.Task.SerializeToString,
-        response_deserializer=proto_dot_todo__pb2.SpecificSummary.FromString,
+        response_deserializer=proto_dot_todo__pb2.Task.FromString,
         )
 
 
@@ -106,7 +106,7 @@ def add_TaskManagerServicer_to_server(servicer, server):
       'ChangeToDone': grpc.stream_stream_rpc_method_handler(
           servicer.ChangeToDone,
           request_deserializer=proto_dot_todo__pb2.Task.FromString,
-          response_serializer=proto_dot_todo__pb2.SpecificSummary.SerializeToString,
+          response_serializer=proto_dot_todo__pb2.Task.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

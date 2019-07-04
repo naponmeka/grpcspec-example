@@ -28,5 +28,5 @@ service TaskManager {
     rpc AddTask(Task) returns (SpecificSummary) {}
     rpc AddTasks(stream Task) returns(Summary) {}
     rpc GetTasks(Employee) returns (stream Task) {}
-    rpc ChangeToDone(stream Task) returns (stream SpecificSummary) {}
+    rpc ChangeToDone(stream Task) returns (stream Task) {}
 }
